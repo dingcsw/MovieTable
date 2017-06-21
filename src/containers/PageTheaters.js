@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { ScrollView, Text } from 'react-native';
 
-export default class PageComingSoon extends Component {
+export default class PageTheaters extends Component {
   static navigationOptions = {
-    tabBarLabel: '即將上映',
+    tabBarLabel: '影城搜尋',
   };
 
   render() {
