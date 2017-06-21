@@ -51,17 +51,18 @@ export default class PageNowPlaying extends Component {
           image: 'http://resource.holyshare.com.tw/uploads/article/600x0/1497519734pi2_1.jpg'
         }
       ],
-      city: '全部',
+      region: '全部地區',
       theater: '全部影城',
       date: '',
-      cityOptions: [
-        '全部', '台北', '新北'
-        //'桃園', '新竹', '苗栗', '台中', '南投', '彰化', '雲林', '嘉義', '台南', '高雄', '屏東', '宜蘭', '花蓮', '台東', '澎湖', '金門' 
-      ],
+      regionOptions: ['全部地區', '北部地區', '中部地區', '南部地區'],
       theaterOptions: {
-        '全部': ['全部影城'],
-        '台北': ['台北全部影城', '台北信義威秀', '台北京站威秀', '台北日新威秀'],
-        '新北': ['新北全部影城', '板橋大遠百威秀', '林口三井OUTLET威秀']
+        '全部地區': [
+          '全部影城', '台北信義威秀', '台北京站威秀', '台北日新威秀', '板橋大遠百威秀', '林口三井OUTLET威秀', '新竹大遠百威秀', '新竹巨城威秀',
+          '頭份尚順威秀', '台中大遠百威秀', '台中TIGER CITY威秀', '台南大遠百威秀', '台南南紡威秀', '高雄大遠百威秀'
+        ],
+        '北部地區': ['全部影城', '台北信義威秀', '台北京站威秀', '台北日新威秀', '板橋大遠百威秀', '林口三井OUTLET威秀', '新竹大遠百威秀', '新竹巨城威秀'],
+        '中部地區': ['全部影城', '頭份尚順威秀', '台中大遠百威秀', '台中TIGER CITY威秀'],
+        '南部地區': ['全部影城', '台南大遠百威秀', '台南南紡威秀', '高雄大遠百威秀']
       },
       isDateTimePickerVisible: false
     }
@@ -84,7 +85,7 @@ export default class PageNowPlaying extends Component {
   }
 
   render() {
-    const { movies, city, cityOptions, theater, theaterOptions, date, isDateTimePickerVisible } = this.state;
+    const { movies, region, regionOptions, theater, theaterOptions, date, isDateTimePickerVisible } = this.state;
     const showMovies = movies.map((item, key) => (
       <Movie 
         {...item}
@@ -92,13 +93,13 @@ export default class PageNowPlaying extends Component {
         isNowPlaying={true}
       />
     ));
-    const setCityOptions = cityOptions.map((item, key) => {
+    const setRegionOptions = regionOptions.map((item, key) => {
       return {
         key: key,
         label: item
       }
     });
-    const setTheaterOptions = theaterOptions[city].map((item, key) => {
+    const setTheaterOptions = theaterOptions[region].map((item, key) => {
       return {
         key: key,
         label: item
@@ -111,16 +112,16 @@ export default class PageNowPlaying extends Component {
           <View style={styles.headerToolbar}>
 
             <ModalPicker
-              data={setCityOptions}
+              data={setRegionOptions}
               onChange={(option) => {this.setState({
-                city: option.label,
+                region: option.label,
                 theater: theaterOptions[option.label][0]
               })}}
             >
               <TextInput 
-                style={styles.cityButton} 
+                style={styles.regionButton} 
                 editable={false} 
-                value={city}
+                value={region}
               />
             </ModalPicker>
 
@@ -179,14 +180,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  cityButton: {
+  regionButton: {
     color: '#0F2540',
     backgroundColor: '#E5F0F4',
     margin: 10,
     padding: 3,
     borderRadius: 5,
     height: 25,
-    width: 50,
+    width: 80,
     textAlign: 'center',
     justifyContent: 'center',
   },
