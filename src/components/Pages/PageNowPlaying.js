@@ -91,7 +91,7 @@ export default class PageNowPlaying extends Component {
         }
       ],
       region: '全部地區',
-      theater: '台北信義威秀',
+      theater: '全部影城',
       date: '',
       regionOptions: ['全部地區', '北部地區', '中部地區', '南部地區'],
       theaterOptions: {
@@ -126,7 +126,7 @@ export default class PageNowPlaying extends Component {
   render() {
     const { movies, region, regionOptions, theater, theaterOptions, date, isDateTimePickerVisible } = this.state;
     const showMovies = movies.map((item, key) => {
-      const availableTime = ((time, date, theater) => {
+      const availableTime = ((time, date, theater, region, theaterOptions) => {
         if (time[date]) {
           if (time[date][theater]) {
             return {
@@ -135,23 +135,33 @@ export default class PageNowPlaying extends Component {
             };
           } else if (theater.contains('全部影城')) {
             let times = [];
-            switch(theater) {
-              case '全部影城':
-              case '北部全部影城':
-              case '中部全部影城':
-              case '南部全部影城':
-              
-            }
-
-            return {
-              timeCase: 'MANY_THEATERS'
+            let hasAvailable = false;
+            const theaters = theaterOptions[region];
+            theaters.forEach((th) => {
+              if (!th.contains('全部影城')) {
+                if (time[date][th]) hasAvailable = true;
+                times.push({
+                  theater: th,
+                  time: time[date][th]
+                });
+              }
+            });
+            if (hasAvailable)
+              return {
+                timeCase: 'MANY_THEATERS',
+                times: times
+              };
+            else return {
+              timeCase: 'NO_TIME_DATE'
             };
           } else return {
             timeCase: 'NO_TIME_THEATER',
             date: date
           };
-        } else return {timeCase: 'NO_TIME_DATE'};
-      }) (item.time, date.inString, theater);
+        } else return {
+          timeCase: 'NO_TIME_DATE'
+        };
+      }) (item.time, date.inString, theater, region, theaterOptions);
 
       return (
         <MovieItem

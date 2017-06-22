@@ -1,7 +1,33 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
 
 export default class Movie extends Component {
+  constructor(props) {
+    super(props);
+    this.icon = require('../../image/toggle.png');
+    this.state = {
+      expanded: true,
+      animation: new Animated.Value()
+    }
+  }
+
+  toggle() {
+    let initialValue = this.state.expanded ? this.state.maxHeight + this.state.minHeight : this.state.minHeight;
+    let finalValue = this.state.expanded ? this.state.minHeight : this.state.maxHeight + this.state.minHeight + 5;
+
+    this.setState({
+      expanded: !this.state.expanded 
+    });
+
+    this.state.animation.setValue(initialValue);
+    Animated.spring(
+      this.state.animation,
+      {
+        toValue: finalValue
+      }
+    ).start();
+  }
+
   render() {
     const {
       titleCh,
@@ -40,19 +66,50 @@ export default class Movie extends Component {
             </View>
           );
         case 'ONE_THEATER':
-          const res = availableTime.times.map((item, key) => (
+          const res1 = availableTime.times.map((item, key) => (
             <TouchableOpacity key={key} style={styles.timeItem}>
               <Text style={styles.timeItemText}>{item}</Text>
             </TouchableOpacity>
           ));
-          return res;
+          return (
+            <View style={styles.timeItemList}>
+              {res1}
+            </View>
+          );
         case 'MANY_THEATERS':
+          if (availableTime.times) {
+            const res2 = availableTime.times.map((item, key) => {
+              if (item.time) 
+                return (
+                  <View key={key}>
+                    <View style={{paddingBottom: 5}}>
+                      <Text>{item.theater}</Text>
+                    </View>
+                    <View style={styles.timeItemList}>
+                      {
+                        ((time) => {
+                          return time.map((item, key) => (
+                          <TouchableOpacity key={key} style={styles.timeItem}>
+                            <Text style={styles.timeItemText}>{item}</Text>
+                          </TouchableOpacity>
+                          ))
+                        }) (item.time)
+                      }
+                    </View>
+                  </View>
+                );
+            });
+            return res2;
+          }
       }
     }) (availableTime);
 
     return (
-      <View style={styles.movie}>
-        <View style={styles.intro}>
+      <Animated.View style={[styles.movie, {height: this.state.animation}]}>
+        <View 
+          style={styles.intro}
+          onLayout={(evt) => this.setState({minHeight: evt.nativeEvent.layout.height})}
+        >
           <View style={styles.imageView}>
             <Image 
               style={styles.image} 
@@ -87,36 +144,48 @@ export default class Movie extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={{ marginBottom: 10 }}
+                  onPress={this.toggle.bind(this)}
                 >
-                  <Text>T</Text>
+                  <Image
+                    style={styles.toggle}
+                    source={this.icon}
+                  ></Image>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         </View>
-        <View style={styles.time}>
+        <View 
+          style={styles.time}
+          onLayout={(evt) => this.setState({maxHeight: evt.nativeEvent.layout.height})}
+        >
           {showAvailableTime}
         </View>
-      </View>
+      </Animated.View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   movie: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    overflow:'hidden'
   },
   time: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     backgroundColor: '#EEEEEE',
     marginHorizontal: 10,
-    marginBottom: 5,
+    marginBottom: 10,
     paddingTop: 10,
-    paddingBottom: 5,
     paddingHorizontal: 10,
     borderRadius: 3,
+  },
+  timeItemList: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingBottom: 5,
   },
   timeItem: {
     backgroundColor: '#FFFFFF',
@@ -135,7 +204,7 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   timeNoTimeBox: {
-    paddingBottom: 5
+    paddingBottom: 10
   },
   intro: {
     flex: 1,
@@ -221,5 +290,9 @@ const styles = StyleSheet.create({
   },
   rating4: {
     backgroundColor: '#CB5B5A',
+  },
+  toggle: {
+    width: 20,
+    height: 20
   }
 });
