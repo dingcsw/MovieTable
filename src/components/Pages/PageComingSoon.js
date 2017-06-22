@@ -6,87 +6,60 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import { MovieItem } from '../Utils';
 
 export default class PageComingSoon extends Component {
-  constructor(props) {
+  static navigationOptions = {
+    tabBarLabel: '即將上映',
+  };
+
+   constructor(props) {
     super(props);
     this.state = {
       movies: [{
-          id: 1,
-          titleCh: '神力女超人',
-          titleEn: 'Wonder Woman',
-          releaseDate: '2017/05/30',
-          runningTime: '141',
-          ratings: '護',
-          genres: ['動作', '冒險', '奇幻'],
-          languages: ['英文'],
-          image: 'https://image.tmdb.org/t/p/w640/1bmocxZAGEU8Gr7jKBsZplrsi9d.jpg',
+          id: 3,
+          titleCh: '死小孩',
+          titleEn: 'Innocent Curse',
+          releaseDate: '2017/06/23',
+          runningTime: '112',
+          ratings: '輔',
+          genres: ['恐怖', '驚悚'],
+          languages: ['日文'],
+          image: 'http://www.photowant.com/photo101/fijp35856116/pl_fijp35856116_0002.jpg',
           time: {
-            '2017-6-22': {
-              '台北信義威秀': ['09:15', '10:30', '11:55', '13:15', '14:05', '14:35', '15:55', '17:15', '18:40', '19:10', '20:00', '21:20', '22:40', '00:00', '01:20'],
-              '台北日新威秀': ['10:05', '12:45', '15:30', '22:30'],
-              '台北京站威秀': ['09:05', '11:45', '14:25', '15:45', '17:05', '19:45', '22:25', '23:35', '01:05']
-            },
             '2017-6-23': {
-              '台北信義威秀': ['09:15', '11:55', '14:00', '14:35', '17:15', '19:15', '20:00', '22:40', '01:20'],
-              '台北日新威秀': ['10:05', '12:45', '15:30', '22:30', '01:10'],
-              '台北京站威秀': ['09:05', '11:45', '14:25', '15:45', '17:05', '19:45', '22:25', '23:35', '01:05']
+              '台北信義威秀': ['19:20'],
+            }
+          }
+        }, {
+          id: 1,
+          titleCh: '神偷奶爸 3',
+          titleEn: 'Despicable Me 3',
+          releaseDate: '2017/06/29',
+          runningTime: '90',
+          ratings: '護',
+          genres: ['動畫', '喜劇', '家庭'],
+          languages: ['中文', '英文'],
+          image: 'https://i1.kknews.cc/large/d020007fe7a9cde68f6',
+          time: {
+            '2017-6-29': {
+              '台北信義威秀': ['09:15', '11:05', '12:55', '14:45', '16:35', '18:25', '20:15'],
+            },
+            '2017-6-30': {
+              '台北信義威秀': ['09:15', '11:05', '12:55', '14:45', '16:35', '18:25', '20:15'],
             }
           }
         }, {
           id: 2,
-          titleCh: '吃吃的愛',
-          titleEn: 'DIDI\'s Dream' ,
-          releaseDate: '2017/05/27',
-          runningTime: '91',
-          ratings: '護',
-          genres: ['劇情', '親情'],
-          languages: ['中文'],
-          image: 'http://web.vscinemas.com.tw/upload/film/film_20170523002.jpg',
-          time: {
-            '2017-6-22': {
-              '台北信義威秀': ['09:05', '14:50', '20:15', '23:45'],
-              '台北京站威秀': ['09:40', '18:25'],
-            },
-            '2017-6-23': {
-              '台北信義威秀': ['09:05', '14:45', '20:15', '23:45'],
-              '台北京站威秀': ['09:40', '18:25'],
-            }
-          }
-        }, {
-          id: 3,
-          titleCh: '神鬼傳奇',
-          titleEn: 'The Mummy(2017)',
-          releaseDate: '2017/06/07',
-          runningTime: '111',
+          titleCh: '蜘蛛人：返校日',
+          titleEn: 'Spider-Man: Homecoming' ,
+          releaseDate: '2017/07/05',
+          runningTime: '133',
           ratings: '輔',
-          genres: ['動作', '恐怖', '冒險', '奇幻'],
+          genres: ['動作', '冒險', '英雄'],
           languages: ['英文'],
-          image: 'https://image.tmdb.org/t/p/w640/8K8LHSgXdUH3YHFJpcUXslPYpYr.jpg',
+          image: 'http://www.truemovie.com/2016Poster/c7thfxlwsaapuf.jpg',
           time: {
-            '2017-6-22': {
-              '台北信義威秀': ['09:30', '10:35', '11:40', '12:45', '13:50', '14:55', '16:00', '17:05', '18:10', '19:15', '20:20', '21:25', '22:30', '23:35', '00:40', '01:45'],
-              '台北日新威秀': ['09:05', '11:10', '13:20', '18:15', '20:20', '23:45'],
-              '台北京站威秀': ['09:25', '11:35', '12:45', '13:45', '15:55', '17:00', '18:05', '20:20', '21:25', '22:30', '00:45'],
+            '2017-7-5': {
+              '台北信義威秀': ['11:10', '13:45', '15:35', '16:20', '18:10', '19:00', '20:45', '21:35', '00:10'],
             },
-            '2017-6-23': {
-              '台北信義威秀': ['10:35', '12:45', '14:55', '19:15', '21:25', '23:35', '01:45'],
-              '台北日新威秀': ['09:05', '11:10', '13:20', '18:15', '20:20'],
-              '台北京站威秀': ['09:25', '11:35', '12:45', '13:45', '15:55', '17:00', '18:05', '20:20', '21:25', '22:30', '00:45'],
-            }
-          }
-        }, {
-          id: 4,
-          titleCh: '惡女',
-          titleEn: 'The Villainess',
-          releaseDate: '2017/06/16',
-          runningTime: '143',
-          ratings: '限',
-          genres: ['劇情', '動作', '冒險'],
-          languages: ['韓文'],
-          image: 'http://resource.holyshare.com.tw/uploads/article/600x0/1497519734pi2_1.jpg',
-          time: {
-            '2017-6-22': {
-              '台北信義威秀': ['21:15']
-            }
           }
         }
       ],
@@ -106,10 +79,6 @@ export default class PageComingSoon extends Component {
       isDateTimePickerVisible: false
     }
   }
-
-  static navigationOptions = {
-    tabBarLabel: '即將上映',
-  };
 
   componentWillMount() {
     const date = new Date();

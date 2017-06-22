@@ -7,7 +7,8 @@ export default class Movie extends Component {
     this.icon = require('../../image/toggle.png');
     this.state = {
       expanded: true,
-      animation: new Animated.Value()
+      animation: new Animated.Value(),
+      init: false
     }
   }
 
@@ -16,7 +17,7 @@ export default class Movie extends Component {
     let finalValue = this.state.expanded ? this.state.minHeight : this.state.maxHeight + this.state.minHeight + 5;
 
     this.setState({
-      expanded: !this.state.expanded 
+      expanded: !this.state.expanded,     
     });
 
     this.state.animation.setValue(initialValue);
@@ -105,7 +106,16 @@ export default class Movie extends Component {
     }) (availableTime);
 
     return (
-      <Animated.View style={[styles.movie, {height: this.state.animation}]}>
+      <Animated.View 
+        //style={[styles.movie, {height: this.state.animation}]}
+        style={styles.movie}
+        onLayout={() => {
+          if (!this.state.init) {
+            this.setState({init: true});
+            this.toggle();
+          }
+        }}
+      >
         <View 
           style={styles.intro}
           onLayout={(evt) => this.setState({minHeight: evt.nativeEvent.layout.height})}

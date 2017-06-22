@@ -7,7 +7,7 @@ import { PageNowPlaying, PageComingSoon, PageTheaters } from './components/Pages
 const App = TabNavigator({
   NowPlaying: { screen: PageNowPlaying }, 
   ComingSoon: { screen: PageComingSoon },
-  Theaters: { screen: PageTheaters },
+  //Theaters: { screen: PageTheaters },
 }, {
   initialRouteName: 'NowPlaying',
 });

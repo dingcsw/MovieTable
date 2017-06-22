@@ -3,10 +3,12 @@ import { View, ScrollView, Text, StyleSheet, TextInput, TouchableOpacity } from 
 import ModalPicker from 'react-native-modal-picker';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
+
 import { MovieItem } from '../Utils';
 
 export default class PageNowPlaying extends Component {
   constructor(props) {
+
     super(props);
     this.state = {
       movies: [{
