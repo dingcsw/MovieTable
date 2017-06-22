@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 
-import { PageNowPlaying, PageComingSoon, PageTheaters } from './containers';
+import { PageNowPlaying, PageComingSoon, PageTheaters } from './components/Pages';
 
 const App = TabNavigator({
   NowPlaying: { screen: PageNowPlaying }, 
